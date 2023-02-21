@@ -1,4 +1,6 @@
 let topButt = document.getElementById('top-button');
+let callButtTop = document.getElementById('call');
+let callButtBott = document.getElementById('callButtBott');
 
 function menu() {
     let open = document.querySelector('#menu-burger');
@@ -17,18 +19,23 @@ menu();
 addEventListener('scroll', () => {
     let header = document.querySelector('#header');
     let scr = window.scrollY;
-    // let topButt = document.getElementById('top-button');
+    let client = document.querySelector('.slide-box').clientWidth;
 
-    if(scr >= 100) {
-        header.style.height = "80px";
-    }else{
-        header.style.height = '120px';
-    };
-    if(scr >= 300) {
-        topButt.style.display = 'flex';
-    }else{
-        topButt.style.display = 'none';
-    };
+    if(client < 768) {
+        header.style.height = '60px';
+    }
+    else{
+        if(scr >= 100) {
+            header.style.height = "80px";
+        }else{
+            header.style.height = '120px';
+        };
+        if(scr >= 300) {
+            topButt.style.display = 'flex';
+        }else{
+            topButt.style.display = 'none';
+        };
+    }
 });
 
 topButt.onclick = () => {
@@ -45,31 +52,79 @@ topButt.onclick = () => {
 }
 
 function sliderTop() {
-    let img = document.querySelectorAll('.slide-img2');
-    let next = document.querySelector('#next2');
-    let prev = document.querySelector('#prev2');
+    let img = document.querySelectorAll('.slide-img');
+    let next = document.querySelector('#next');
+    let prev = document.querySelector('#prev');
+    let client = document.querySelector('.slide-box').clientWidth;
+    let client1 = -client;
     let flag = 0;
     let flag1 = 0;
+    let step = 265;
+    let step1 = -265;
 
     setInterval(next.onclick = () => {
-        flag -= 265;
-        flag1 = flag / img.length;
-        for (let i = 0; i < img.length; i++) {
-            if(flag1 < -265 / 2) {
-                flag = 0;
-           }if(flag1 > -265){
-            img[i].style.transform = 'translate3d(' + flag + 'px,0,0)';   
-           }
+        if(client < 768) {
+            flag += -client
+        }else{
+            flag += step1;
         }
-    },'3000')
+        /////////
+        if(client > 1023 && client < 1201) {
+            flag1 = flag / (img.length - 2);
+        }
+        if(client > 767 && client < 1024) {
+            flag1 = flag / (img.length - 1);
+        }
+        if(client < 767) {
+            flag1 = flag / (img.length);
+        }
+        else{
+            flag1 = flag / (img.length - 3);
+        }
+
+        for (let i = 0; i < img.length; i++) {
+            if(flag1 == step1 || flag1 == -client){
+                flag = 0;
+                img[i].style.transform = 'translate3d(' + flag + 'px,0,0)';
+            }
+            if(flag1 !== step1){
+                img[i].style.transform = 'translate3d(' + flag + 'px,0,0)';
+            }
+        }
+    },'3000');
     
 
     prev.onclick = () => {
-        flag += 265;
-        flag1 = flag / img.length;
+        if(client < 768) {
+            flag += client
+        }else{
+            flag += step;
+        }
+        //////
+        if(client > 1023 && client < 1201) {
+            flag1 = flag / (img.length - 2);
+        }
+        if(client > 767 && client < 1024) {
+            flag1 = flag / (img.length - 1);
+        }
+        else{
+            flag1 = flag / (img.length - 3);
+        }
+
         for (let i = 0; i<img.length; i++) {
             if(flag1 > 0){
-                flag = -265 * img.length / 2;
+                if(client > 1200) {
+                    flag = step1 * (img.length - 4);
+                }
+                if(client > 1023 && client < 1201) {
+                    flag = step1 * (img.length - 3);
+                }
+                if(client > 767 && client < 1024) {
+                    flag = step1 * (img.length - 2);
+                }
+                if(client < 767) {
+                    flag = client1 * (img.length - 1);
+                }
                 img[i].style.transform = 'translate3d(' + flag + 'px,0,0)';
             }if(flag1 <= 0){
                 img[i].style.transform = 'translate3d(' + flag + 'px,0,0)';
@@ -80,31 +135,78 @@ function sliderTop() {
 sliderTop();
 
 function sliderBottom() {
-    let img = document.querySelectorAll('.slide-img');
-    let next = document.querySelector('#next');
-    let prev = document.querySelector('#prev');
+    let img = document.querySelectorAll('.slide-img2');
+    let next = document.querySelector('#next2');
+    let prev = document.querySelector('#prev2');
+    let client = document.querySelector('.slide-box').clientWidth;
+    let client1 = -client;
     let flag = 0;
     let flag1 = 0;
+    let step = 265;
+    let step1 = -265;
 
-    setInterval(next.onclick = () => {
-        flag -= 265;
-        flag1 = flag / img.length;
-        for (let i = 0; i < img.length; i++) {
-            if(flag1 < -265 / 2) {
-                flag = 0;
-           }if(flag1 > -265){
-            img[i].style.transform = 'translate3d(' + flag + 'px,0,0)';   
-           }
+    next.onclick = () => {
+        if(client < 768) {
+            flag += -client
+        }else{
+            flag += step1;
         }
-    },'3000')
-    
+        ///////
+        if(client > 1023 && client < 1201) {
+            flag1 = flag / (img.length - 2);
+        }
+        if(client > 767 && client < 1024) {
+            flag1 = flag / (img.length - 1);
+        }
+        if(client < 767){
+            flag1 = flag / (img.length);
+        }
+        else{
+            flag1 = flag / (img.length - 3);
+        }
+
+        for (let i = 0; i < img.length; i++) {
+            if(flag1 == step1 || flag1 == -client){
+                flag = 0;
+                img[i].style.transform = 'translate3d(' + flag + 'px,0,0)';
+            }
+            if(flag1 !== step1){
+                img[i].style.transform = 'translate3d(' + flag + 'px,0,0)';
+            }
+        }
+    }
 
     prev.onclick = () => {
-        flag += 265;
-        flag1 = flag / img.length;
+        if(client < 768) {
+            flag += client
+        }else{
+            flag += step;
+        }
+        //////
+        if(client > 1023 && client < 1201) {
+            flag1 = flag / (img.length - 2);
+        }
+        if(client > 767 && client < 1024) {
+            flag1 = flag / (img.length - 1);
+        }
+        else{
+            flag1 = flag / (img.length - 3);
+        }
+
         for (let i = 0; i<img.length; i++) {
             if(flag1 > 0){
-                flag = -265 * img.length / 2;
+                if(client > 1200) {
+                    flag = step1 * (img.length - 4);
+                }
+                if(client > 1023 && client < 1201) {
+                    flag = step1 * (img.length - 3);
+                }
+                if(client > 767 && client < 1024) {
+                    flag = step1 * (img.length - 2);
+                }
+                if(client < 767) {
+                    flag = client1 * (img.length - 1);
+                }
                 img[i].style.transform = 'translate3d(' + flag + 'px,0,0)';
             }if(flag1 <= 0){
                 img[i].style.transform = 'translate3d(' + flag + 'px,0,0)';
@@ -115,15 +217,15 @@ function sliderBottom() {
 sliderBottom();
 
 function callTab() {
-    let callButt = document.getElementById('call');
-    let tabBox = document.getElementById('sec-3-tab'); 
+    let tabBox = document.getElementById('tab'); 
     let closeTab = document.getElementById('close-tab');
     let tabBack = document.getElementById('tab-back');
 
-    callButt.onclick = () => {
+    function openTab() {
         tabBox.style.display = 'flex';
         tabBack.style.display = 'flex';
     }
+    openTab();
     closeTab.onclick = () => {
         tabBox.style.display = 'none';
         tabBack.style.display = 'none';
@@ -134,4 +236,10 @@ function callTab() {
     }
 
 }
-callTab();
+
+callButtTop.onclick = () => {
+    callTab();
+};
+callButtBott.onclick = () => {
+    callTab();
+}
