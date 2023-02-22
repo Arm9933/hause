@@ -22,7 +22,7 @@ addEventListener('scroll', () => {
     let client = document.querySelector('.slide-box').clientWidth;
 
     if(client < 768) {
-        header.style.height = '60px';
+        header.style.height = '50px';
     }
     else{
         if(scr >= 100) {
